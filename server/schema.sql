@@ -1,0 +1,19 @@
+--DROP TABLE IF EXISTS user;
+--DROP TABLE IF EXISTS session;
+
+CREATE TABLE IF NOT EXISTS user (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    ppassword TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS session (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    forwardCount INTEGER NOT NULL,
+    rightCount INTEGER NOT NULL,
+    leftCount INTEGER NOT NULL,
+    backCount INTEGER NOT NULL,
+    score INTEGER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id)
+);

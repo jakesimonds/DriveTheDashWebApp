@@ -1,0 +1,19 @@
+openapi: 3.0.0
+info:
+  title: Simple API
+  description: A simple API to demonstrate OpenAPI specification
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: Local server
+paths:
+  /api/connected:
+    get:
+      summary: Query whether robot is currently connected to a driver
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: Boolean
+                example: true
