@@ -63,11 +63,9 @@ on mac) and then others should be able to connect (unless security things I don'
 
 ## External Resources
 - [https://github.com/IlyaSukhanov/morseapi](https://github.com/IlyaSukhanov/morseapi)
-	- really amazing API, was what I started with, but needs linux + python2.7
+	- really amazing API, was what I started with, but how I did it at least it needs linux + python2.7
 - [https://github.com/mewmix/bleak-dash](https://github.com/mewmix/bleak-dash) 
-	- Corresponded with author on github, he is rewriting the MorseAPI with Bleak instead of pygatt (both bluetooth protocols). 
-	- Gained cross-platform portability & ease of boot-up. Lost some functionality from MorseAPI. 
-	- Was fun to talk to strangers online
+	- Built on the above I think? Gained cross-platform portability & ease of boot-up. 
 - [https://github.com/burkeholland/express-react-starter](https://github.com/burkeholland/express-react-starter) 
 	- Pro:
 		- gave me boilerplate I didn't want to write & connected front and backend for me
