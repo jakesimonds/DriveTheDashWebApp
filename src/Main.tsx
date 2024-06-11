@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from './AuthContext';
 import axios from 'axios';
 import ConnectionStatus from './ConnectionStatus';
-
+import LlamaInput from './llamaInput';
 
 const Main = () => {
   const { isLoggedIn } = useAuth();
@@ -17,6 +17,9 @@ const Main = () => {
 
   const [isConnecting, setIsConnecting] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState('');
+
+  const [sendingToLlama, setSendingToLlama] = useState(false);
+  const [llamaStatus, setLlamaStatus] = useState('');
 
   const handleConnect = async () => {
     setIsConnecting(true);
@@ -34,18 +37,20 @@ const Main = () => {
     }
   };
 
-  const handleDisconnect = async () => {
-    setIsConnecting(false);
-    setConnectionStatus('Disconnected!');
 
-    try {
-      const response = await axios.get('/disconnect');
-    } catch (error) {
-      console.error('Error disconnecting to robot:', error);
-      setConnectionStatus('Problem disconnecting :( ');
-    } finally {
-      setIsConnecting(false);
-    }
+  const handleLlamaSubmit = (text: any) => {
+    // Submit the text to another service
+    setSendingToLlama(true);
+    setLlamaStatus('Sending...');
+
+    fetch('http://localhost:3000/llama', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ text }),
+    });
+    setSendingToLlama(false);
   };
 
 
@@ -54,16 +59,16 @@ const Main = () => {
       return;
     }
     switch (event.key) {
-      case 'w':
+      case 'ArrowUp':
         handleButtonClick('forward');
         break;
-      case 'a':
+      case 'ArrowLeft':
         handleButtonClick('left');
         break;
-      case 's':
+      case 'ArrowDown':
         handleButtonClick('back');
         break;
-      case 'd':
+      case 'ArrowRight':
         handleButtonClick('right');
         break;
       default:
@@ -83,37 +88,44 @@ const Main = () => {
     <div className="content-container">
             {isLoggedIn ? (
         <>
+                      <div className='box'>
+        <p> Directions: 
+              <li> There are two ways to control the robot: buttons or the Llama Llama text interface </li>
+              <li> You must be connected to the robot for anything to work! Button or Llama Llama to connect</li>
+              <li> Have fun!</li>
 
+        </p>
+        </div>
 
-        <ul className="robot">
-                  {/* <li><button onClick={() => handleButtonClick('connect')}>Connect</button></li> */}
+        <div className='llama-arrows'>
+        <div className="robot">
+                  {/* <div className="grid-container"> */}
+                  <div className="arrow-keys">
                   <div>
-                    <button onClick={handleConnect} disabled={isConnecting}>
+                    <button className="connect" onClick={handleConnect} disabled={isConnecting}>
                       {isConnecting ? 'Connecting...' : 'Connect'}
                     </button>
                     <p>{connectionStatus}</p>
                   </div>
-                  <li><button onClick={() => handleButtonClick('forward')}>Forward</button></li>
-                  <li><button onClick={() => handleButtonClick('right')}>Right</button></li>
-                  <li><button onClick={() => handleButtonClick('left')}>Left</button></li>
-                  <li><button onClick={() => handleButtonClick('back')}>Back</button></li>
-                  <div>
-                    <button onClick={handleDisconnect} disabled={isConnecting}>
-                      {isConnecting ? 'Disconnecting...' : 'Disconnect'}
-                    </button>
-
+                  <div className="forward"><button onClick={() => handleButtonClick('forward')}>Forward</button></div>
+                  <div className="right"><button onClick={() => handleButtonClick('right')}>Right</button></div>
+                  <div className="left"><button onClick={() => handleButtonClick('left')}>Left</button></div>
+                  <div className="back"><button onClick={() => handleButtonClick('back')}>Back</button></div>
+                  <p>(Arrow keys on your keyboard also work!)</p>
                   </div>
-              </ul>
-              
-              <div className='box'>
-        <p> Directions: 
-              <li> Press 'Connect', wait for it to (hopefully!) connect</li>
-              <li> Drive with the buttons or the W-A-S-D keys</li>
-              <li> Press 'Disconnect' when you're done!</li>
-              <li> Troubleshooting within the website is...limited. Best bet is to relaunch whole thing (including rebooting Dash!)</li>
-
-        </p>
+                  {/* </div> */}
         </div>
+
+
+                  <div>
+                    <div className='box'>
+                    <div><LlamaInput onSubmit={handleLlamaSubmit} /></div>
+                    <p></p>
+                    </div>
+                  </div>
+              
+        </div>
+
               </>
 
               

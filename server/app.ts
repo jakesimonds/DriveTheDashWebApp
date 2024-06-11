@@ -5,8 +5,11 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 import axios from 'axios';
-
-const IP_ADDRESS = "127.0.0.1" // Artifact from when compatibility issues meant robot-flask-app was on linux machine, leaving for future flexibility
+// ifconfig | grep inet
+//const IP_ADDRESS = "194.168.1.174" // Artifact from when compatibility issues meant robot-flask-app was on linux machine, leaving for future flexibility
+//require('dotenv').config();
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+const IP_ADDRESS = process.env.IP_ADDRESS;
 
 var app = express();
 
@@ -165,8 +168,10 @@ app.get('/connect', async (req:any, res:any) => {
         req.session.save();
       }
     });
-    
+    console.log("RIGHT BEFORE SENDING /connect to:")
+    console.log(`http://${IP_ADDRESS}:5555/connect`)
     const response = await axios.get(`http://${IP_ADDRESS}:5555/connect`);
+    console.log("sent it!")
     const data = response.data;
     console.log(data);
     res.send({ message: "Connected to robot: ", data: data });
@@ -259,6 +264,29 @@ app.get('/disconnect', (req:any, res:any) => {
 });
 
 
+
+app.post('/llama', async (req:any, res:any) => {
+  console.log("app.ts /llama route hit...");
+  try {
+    const data = req.body;
+
+    console.log("data from req body: ");
+    console.log(data);
+
+    
+    //const response = await axios.post(`http://${IP_ADDRESS}:5000/submit`, data);
+    // actually send locally to llama
+    const response = await axios.post(`http://localhost:5000/submit`, data);
+    
+    const Resdata = response.data; 
+    console.log("HERE COMES RESPONSE DATA LINE 277 app.ts");
+    console.log(Resdata);
+    res.send({ message: "success", data: Resdata }); // SENDING WHERE???
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).send({ message: "Failed to connect to robot :(" });
+  }
+});
 
 
 

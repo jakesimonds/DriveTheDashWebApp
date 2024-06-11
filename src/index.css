@@ -25,21 +25,30 @@ code {
   gap: 20px;
 }
 
-.robot button {
+
+.connect{
+  border-radius: 50%; /* Circular shape */
   padding: 10px 20px;
   border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: white;
+  background-color: #de0000;
+  color: rgb(255, 255, 255);
   cursor: pointer;
   transition: background-color 0.3s;
+  width: 150px;
+  height: 150px;
 }
 
-.robot button:hover {
-  background-color: #0056b3;
+.arrow-keys button {
+  padding: 10px 20px;
+  font-size: 32px;
+  width: 100px;
+  height: 100px;
 }
 
 
+.arrow-keys button:hover {
+  background-color: #1461b9;
+}
 
 .boxes-container {
   display: flex;
@@ -49,6 +58,24 @@ code {
   margin-bottom: 20px;
   gap: 20px; /* Adds gap between flex items */
 }
+
+
+.arrow-keys {
+  padding: 20px;
+  margin: 20 px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  min-width: 0;
+
+}
+
 
 .box {
   flex: 1;
@@ -65,6 +92,87 @@ code {
   min-width: 0; /* Allows flex items to shrink below content size */
 }
 
+.input-large {
+  width: 400px;
+  height: 40px;
+  font-size: 16px;
+}
+
+.box-llama {
+  flex: 1;
+  padding: 20px;
+  margin: 20px;
+  background-color: #8ebed6a7;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* This centers the content vertically if the box doesn't stretch */
+  /* align-items: center; This centers the content horizontally */
+  min-width: 0; /* Allows flex items to shrink below content size */
+}
+
+.llama-llama {
+  font-family: 'Impact', 'Haettenschweiler', 'Arial Narrow Bold', sans-serif;
+  font-size: 5em;
+  text-align: center;
+  color: #ff4500;
+}
+
+.grid-container {
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.grid-container button {
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.grid-container p {
+  grid-column: span 2; /* Make the connection status span across two columns */
+  text-align: center;
+}
+
+.arrow-keys {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+  justify-items: center;
+  align-items: center;
+}
+
+.arrow-keys button {
+  font-size: 16px;
+  width: 100px;
+  height: 100px;
+}
+
+
+.forward {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.right {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.left {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.back {
+  grid-column: 2;
+  grid-row: 2;
+}
 
 .full-width {
   /* or whatever your desired max size is */
@@ -186,4 +294,55 @@ code {
 
 .yellow {
   background-color: yellow;
+}
+.flexflex {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Align children to the bottom */
+  height: 200px; /* Example height, adjust as needed */
+  border: 1px solid #ccc; /* Example border for visibility */
+  padding: 10px; /* Optional padding */
+}
+
+.bottom-text {
+  margin: 0; /* Remove default margin */
+}
+
+.llama-arrows {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  
+}
+
+@media (max-width: 800px) {
+  .llama-arrows {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+
+.command-box-llama {
+  border: 2px solid #000;
+  padding: 20px;
+  margin: 20px;
+}
+
+.submit-button-llama {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px 2px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-button-llama:hover {
+  background-color: #45a049; /* Darker green */
 }

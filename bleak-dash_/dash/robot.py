@@ -52,7 +52,7 @@ class Robot:
                 try:
                     char_uuid = COMMAND1_CHAR_UUID
                     message = bytearray([COMMANDS[command_name]]) + command_values
-                    logging.debug(f"Sending command: {binascii.hexlify(message)}")
+                    print(f"Sending command: {binascii.hexlify(message)}")
                     await self.client.write_gatt_char(char_uuid, message)  # Use `self.client` to write
                     logging.info("Command sent successfully.")
                 except Exception as e:
@@ -148,7 +148,7 @@ class DashRobot(Robot):
         await self.command("drive", bytearray([
             0x00,  # Placeholder for potential additional parameters
             speed & 0xff,
-            (speed & 0xff00) >> 5
+            (speed >> 8) & 0xff
         ]))
 
 
@@ -238,6 +238,12 @@ async def discover_and_connect(retry_attempts=3, retry_delay=5):
                     dot_robot = Robot(device.address)
                     await dot_robot.connect()
                     return dot_robot
+                elif device.name == "Cue":
+                    logging.info(f"Found Cue at: {device.address}")
+                    cue_robot = Robot(device.address)
+                    await cue_robot.connect()
+                    return cue_robot
+                
             logging.warning("Compatible device not found. Retrying...")
         except Exception as e:
             logging.error(f"An error occurred during device discovery: {e}")
