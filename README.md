@@ -1,5 +1,12 @@
-## What is it?  
 
+## DEMO with natural-language commands:
+https://www.youtube.com/watch?v=FoStVCW7-HY
+
+
+## NOTE!
+This project is in flux, readme is old. Currently in flux enough that directions to boot up locally/clone are old & probably won't work. If you have a dash and are interested in using anything reach out directly :) 
+
+## What is it?  
 DEMO: [2-min functionality demo](https://youtu.be/4DF0minFRTY?si=VUnZnfDxk-GtGXOp)
 
 `Drive The Dash` is an experimental website that is designed to be cloned & run locally over wifi & allow people with a Wonder Workshop Dash robot to have fun driving their robot over the web, and learn however much they want to learn about web development. 
