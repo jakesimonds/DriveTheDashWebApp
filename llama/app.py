@@ -113,27 +113,42 @@ async def llava(request: Request):
 async def submit_text(request: Request):
     # One command
     data = await request.json()
-    
-    
-    
-    
     text = data.get("text")
-    print(f" /submit on fastAPI llama server recieved as data.get(text): {text} ")
+    
+    
+
+    
+    
+    
+    
+    
+    
+
     
     
     if text:
         try:
-            await capture_photo()
-            yolo_res = await yolo()
-            print("yolo_res: ", yolo_res)
-            result = ollama.chat(model='JuneRobot', messages=[{'role': 'user', 'content': text}])
-            print("Model response:", result)
+            i = 0
+            # init history
+            history = {}
             
-            message = result["message"]
+            while i < 5 or flag == False:
+                await capture_photo()
+                current_view = await yolo()
+                history[i] = [current_view]
             
-            #content_dict = json.loads(message["content"])
-            command_text = message["content"]
-            print(f"command_text: {command_text}")
+                message = text + history + current_view
+                print("Message to model:", message)
+                result = ollama.chat(model='JuneRobot', messages=[{'role': 'user', 'content': text}])
+                print("Model response:", result)
+            
+                #history[i].append(COMMANDS)
+                message = result["message"]
+                command_text = message["content"]
+                
+                response2 = await httpx.client.post(f'http://{IP_ADDRESS}:5555/llama', command_text);
+                
+                print(f"command_text: {command_text}")
             
         except Exception as e:
             return {"Error from fastAPI llama server :", str(e)}
@@ -154,6 +169,22 @@ FUTURE:
 - calibrate turning to specific objects if possible
 
 - make a descriminator custom llama that decides if the 'job' is done
+
+
+IDEA:
+
+
+Give llama:
+command: string of the user telling you what they want, only ever one
+
+Note: this is a brand new command. All we know comes from the command and current view. Good luck!
+
+History: { [i: view, commands, completion] } the previous classifier feedback and commands given to robot
+
+
+
+
+You can turn your head to see more. You are straight on with something when its at 300. 
 
 
 

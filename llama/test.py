@@ -50,17 +50,6 @@ print("obj: ", obj)
 
 '''
 
-IDEA:
-
-
-Give llama:
-command: string of the user telling you what they want
-History: {} the previous classifier feedback and commands given to robot
-yolo: json of relative positions of things
-
-You can turn your head to see more. You are straight on with something when its at 300. 
-
-
 
 
 '''
